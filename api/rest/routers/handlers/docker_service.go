@@ -8,6 +8,14 @@ import (
 	"github.com/muhfaris/docker-ui/api/rest/routers/models"
 )
 
+// DockerListServices returns a list of Docker services
+// @Summary List Docker services
+// @Description Retrieves a list of Docker services with their details
+// @Tags docker
+// @Produce json
+// @Success 200 {array} models.Service
+// @Failure 500 {object} map[string]any
+// @Router /docker/services [get]
 func (h *Handler) DockerListServices() func(*fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		var (
@@ -39,6 +47,17 @@ func (h *Handler) DockerListServices() func(*fiber.Ctx) error {
 	}
 }
 
+// DockerUpdateServices updates labels for multiple Docker services
+// @Summary Update Docker service labels
+// @Description Updates labels for the specified Docker services
+// @Tags docker
+// @Accept json
+// @Produce json
+// @Param services body []models.Service true "Services to update"
+// @Success 200 {array} models.Service
+// @Failure 400 {object} map[string]any
+// @Failure 500 {object} map[string]any
+// @Router /docker/services [put]
 func (h *Handler) DockerUpdateServices() func(*fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		var (
