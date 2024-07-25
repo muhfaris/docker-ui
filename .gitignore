@@ -11,4 +11,4 @@ ui/build
 ui/dist
 
 # ignore coverage
-ui/.env
+ui/src/.env
