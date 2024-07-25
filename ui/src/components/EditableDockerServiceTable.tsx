@@ -98,7 +98,7 @@ const EditableDockerServiceTable: React.FC<EditableTableProps> = ({ data }) => {
     }
   };
 
-  const handleSubmitAll = () => {
+  const handleSubmitAll = async () => {
     const errors = tableData.flatMap(validateRow);
     if (errors.length > 0) {
       setValidationErrors(errors);
@@ -106,6 +106,15 @@ const EditableDockerServiceTable: React.FC<EditableTableProps> = ({ data }) => {
     }
     console.log("Submitting all data:", tableData);
     setValidationErrors([]);
+    try {
+      const payload: DataDockerService[] = tableData;
+      const response = await updateDockerServiceAPI(payload);
+      console.log(response);
+    } catch (error) {
+      const errors: string[] = [];
+      errors.push(`An error occurred while updating the service: ${error}`);
+      setValidationErrors(errors);
+    }
   };
 
   const handleCancel = () => {
