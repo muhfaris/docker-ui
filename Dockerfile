@@ -1,23 +1,22 @@
 # Use an official Golang runtime as a parent image for the backend build
-FROM golang:1.19-alpine AS backend-builder
+FROM golang:1.21.5-alpine AS backend-builder
 
 # Set the Current Working Directory inside the container
 WORKDIR /app/backend
 
-# Copy go mod and sum files
-COPY go.mod backend/go.sum ./
+# Copy the backend source code
+COPY . .
 
 # Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
 
-# Copy the backend source code
-COPY backend/ .
-
 # Build the Go app
-RUN go build -o main .
+RUN go build -o app .
 
 # Use an official Node.js runtime as a parent image for the frontend build
-FROM node:16-alpine AS frontend-builder
+FROM node:18-alpine AS frontend-builder
+
+ENV NODE_ENV=production
 
 # Set the Current Working Directory inside the container
 WORKDIR /app/frontend
@@ -31,8 +30,11 @@ RUN npm install
 # Copy the frontend source code
 COPY ui/ .
 
+# Tailwind CSS
+RUN npm run build-css
+
 # Build the React app
-RUN yarn build
+RUN npm run build
 
 # Use a minimal Docker image for the final stage
 FROM alpine:3.14
@@ -41,7 +43,7 @@ FROM alpine:3.14
 WORKDIR /app
 
 # Copy the backend executable from the backend builder stage
-COPY --from=backend-builder /app/backend/main ./backend/
+COPY --from=backend-builder /app/backend/app ./backend/
 
 # Copy the frontend build files from the frontend builder stage
 COPY --from=frontend-builder /app/frontend/build ./frontend/build
@@ -59,4 +61,4 @@ EXPOSE 8080
 EXPOSE 80
 
 # Start both the backend and frontend servers
-CMD ["/bin/sh", "-c", "./backend/main & nginx -g 'daemon off;'"]
+CMD ["/bin/sh", "-c", "./backend/app & nginx -g 'daemon off;'"]
