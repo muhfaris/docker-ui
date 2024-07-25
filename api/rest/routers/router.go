@@ -7,6 +7,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/muhfaris/docker-ui/api/rest/routers/handlers"
 	"github.com/muhfaris/docker-ui/api/rest/routers/middlewares"
+
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
 )
 
 type Router struct {
@@ -35,6 +39,11 @@ func New() *Router {
 }
 
 func (r *Router) initialize() {
+	// middleware
+	r.fiber.Use(cors.New())
+	r.fiber.Use(logger.New())
+	r.fiber.Use(requestid.New())
+
 	var apiGroup = r.fiber.Group("/api")
 	apiGroup.Post("/login", r.handler.Login())
 

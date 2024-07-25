@@ -29,10 +29,16 @@ func (h *Handler) DockerListServices() func(*fiber.Ctx) error {
 		}
 
 		for _, dockerService := range dockerServices {
+			tasks, err := h.docker.GetActiveTasksInfo(ctx, dockerService.Spec.Name)
+			if err != nil {
+				return err
+			}
+
 			service := models.Service{
 				ID:     dockerService.ID,
 				Name:   dockerService.Spec.Name,
 				Labels: dockerService.Spec.Labels,
+				Status: tasks.Status,
 				Metadata: models.Metadata{
 					CreatedAt: dockerService.CreatedAt,
 					UpdatedAt: dockerService.UpdatedAt,

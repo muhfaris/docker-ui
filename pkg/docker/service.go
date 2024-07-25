@@ -7,6 +7,7 @@ import (
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/swarm"
+	"github.com/muhfaris/docker-ui/api/rest/routers/models"
 )
 
 // List all services
@@ -18,6 +19,42 @@ func (d *Docker) ListServices(ctx context.Context, filters filters.Args) ([]swar
 	}
 
 	return services, nil
+}
+
+func (d *Docker) GetActiveTasksInfo(ctx context.Context, serviceName string) (*models.TasksService, error) {
+	tasks, err := d.client.TaskList(ctx, types.TaskListOptions{
+		Filters: filters.NewArgs(
+			filters.KeyValuePair{
+				Key:   "desired-state",
+				Value: "running",
+			},
+			filters.KeyValuePair{
+				Key:   "service",
+				Value: serviceName,
+			},
+		),
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	var tasksService = &models.TasksService{}
+	for _, task := range tasks {
+		if task.Status.State != "running" {
+			continue
+		}
+
+		tasksService.ServiceID = task.ServiceID
+		tasksService.Status = string(task.Status.State)
+
+		tasksService.Tasks = append(tasksService.Tasks, models.Task{
+			ID:     task.ID,
+			Name:   task.ServiceID,
+			Status: string(task.Status.State),
+		})
+	}
+	return tasksService, nil
 }
 
 // Function to update a service label
