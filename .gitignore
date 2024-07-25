@@ -1,2 +1,14 @@
 #vendor
 vendor
+
+# ignore nodemodule
+ui/node_modules
+
+# ignore build
+ui/build
+
+# ignore dist
+ui/dist
+
+# ignore coverage
+ui/.env
