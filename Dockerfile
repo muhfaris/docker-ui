@@ -5,7 +5,7 @@ FROM golang:1.19-alpine AS backend-builder
 WORKDIR /app/backend
 
 # Copy go mod and sum files
-COPY backend/go.mod backend/go.sum ./
+COPY go.mod backend/go.sum ./
 
 # Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
@@ -23,13 +23,13 @@ FROM node:16-alpine AS frontend-builder
 WORKDIR /app/frontend
 
 # Copy the package.json and yarn.lock files
-COPY frontend/package.json frontend/yarn.lock ./
+COPY ui/package.json ./
 
 # Install dependencies
-RUN yarn install
+RUN npm install
 
 # Copy the frontend source code
-COPY frontend/ .
+COPY ui/ .
 
 # Build the React app
 RUN yarn build
@@ -50,7 +50,7 @@ COPY --from=frontend-builder /app/frontend/build ./frontend/build
 RUN apk add --no-cache nginx
 
 # Copy nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY ./etc/nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 8080 for the backend
 EXPOSE 8080
