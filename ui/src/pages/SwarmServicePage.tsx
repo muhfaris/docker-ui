@@ -2,11 +2,7 @@
 import React, { useEffect, useState } from "react";
 import EditableDockerServiceTable from "../components/EditableDockerServiceTable";
 import Sidebar from "../components/Sidebar";
-import {
-  LabelDockerService,
-  DockerServiceResponse,
-  DataDockerService,
-} from "../types/SwarmService";
+import { DataDockerService } from "../types/SwarmService";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 import { dockerServicesAPI } from "../api/Docker";
 
