@@ -11,4 +11,4 @@ The following environment variables are required:
 
 - AUTH_USERNAME
 - AUTH_PASSWORD
-- PORT (default 2121)
+- VITE_API_URL
