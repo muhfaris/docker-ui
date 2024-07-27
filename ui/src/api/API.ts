@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-
-const baseURL = process.env.BASE_URL || "http://localhost:2121";
+const baseURL = import.meta.env.VITE_API_URL || "http://localhost:2121";
 
 // Axios instance with default settings
 const apiClient = axios.create({

@@ -1,6 +1,6 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
-import useAuthRedirect from "../hooks/useAuthRedirect";
+import Sidebar from "../shared/components/Sidebar";
+import useAuthRedirect from "../shared/hooks/useAuthRedirect";
 
 const Dashboard: React.FC = () => {
   const isAuthenticated = useAuthRedirect();

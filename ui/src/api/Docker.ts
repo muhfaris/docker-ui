@@ -4,7 +4,7 @@ import {
   DataDockerServiceAPI,
   DockerServiceRequest,
   DockerServiceResponse,
-} from "../types/SwarmService";
+} from "../shared/types/SwarmService";
 import apiRequest from "./API";
 
 export const dockerServicesAPI = async (

@@ -49,6 +49,7 @@ const LoginPage: React.FC = () => {
               id="username"
               className="border border-gray-300 rounded-md p-2 w-full"
               value={username}
+              autoComplete="username"
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
@@ -64,6 +65,7 @@ const LoginPage: React.FC = () => {
               id="password"
               className="border border-gray-300 rounded-md p-2 w-full"
               value={password}
+              autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>

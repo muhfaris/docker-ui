@@ -1,6 +1,6 @@
 // src/api/login.ts
 import apiRequest from "./API";
-import { LoginResponse } from "../types/Login";
+import { LoginResponse } from "../shared/types/Login";
 
 interface LoginRequest {
   username: string;

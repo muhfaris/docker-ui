@@ -30,9 +30,6 @@ RUN npm install
 # Copy the frontend source code
 COPY ui/ .
 
-# Tailwind CSS
-RUN npm run build-css
-
 # Build the React app
 RUN npm run build
 
@@ -46,7 +43,7 @@ WORKDIR /app
 COPY --from=backend-builder /app/backend/app ./backend/
 
 # Copy the frontend build files from the frontend builder stage
-COPY --from=frontend-builder /app/frontend/build ./frontend/build
+COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
 # Install a simple web server for serving the frontend files
 RUN apk add --no-cache nginx
