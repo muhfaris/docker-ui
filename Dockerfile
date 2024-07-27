@@ -6,7 +6,6 @@ WORKDIR /app/backend
 
 # Copy the backend source code
 COPY . .
-
 # Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
 
@@ -36,6 +35,12 @@ RUN npm run build
 # Use a minimal Docker image for the final stage
 FROM alpine:3.14
 
+LABEL org.opencontainers.image.author="info@muhfaris.com"
+# LABEL org.opencontainers.image.description DESCRIPTION
+
+ENV AUTH_USERNAME=root
+ENV AUTH_PASSWORD=rootr00t
+
 # Set the Current Working Directory inside the container
 WORKDIR /app
 
@@ -48,14 +53,16 @@ COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 # Install a simple web server for serving the frontend files
 RUN apk add --no-cache nginx
 
-# Copy nginx configuration
-COPY ./etc/nginx.conf /etc/nginx/nginx.conf
+# Copy nginx and env configuration
+COPY ./deployment/etc/nginx.conf /etc/nginx/nginx.conf
+COPY ./deployment/scripts/env.sh /docker-entrypoint.d/env.sh
+RUN chmod +x /docker-entrypoint.d/env.sh
 
-# Expose port 8080 for the backend
-EXPOSE 8080
+# Expose port 2121 for the backend
+EXPOSE 2121
 
 # Expose port 80 for the frontend
 EXPOSE 80
 
 # Start both the backend and frontend servers
-CMD ["/bin/sh", "-c", "./backend/app & nginx -g 'daemon off;'"]
+CMD ["/bin/sh", "-c","/docker-entrypoint.d/env.sh && ./backend/app & nginx -g 'daemon off;'"]

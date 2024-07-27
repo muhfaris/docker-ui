@@ -2,6 +2,7 @@ ui/node_modules
 ui/.cache
 ui/build
 ui/dist
+ui/.env
 
 vendor
 .cache
