@@ -16,8 +16,6 @@ RUN go build -o app .
 # Use an official Node.js runtime as a parent image for the frontend build
 FROM node:18-alpine AS frontend-builder
 
-ENV NODE_ENV=production
-
 # Set the Current Working Directory inside the container
 WORKDIR /app/frontend
 
@@ -26,6 +24,8 @@ COPY ui/package.json ./
 
 # Install dependencies
 RUN npm install
+
+RUN npm install postcss-cli autoprefixer
 
 # Copy the frontend source code
 COPY ui/ .
