@@ -13,4 +13,5 @@ ui/dist
 # ignore coverage
 ui/.env
 
+.github_token
 
