@@ -16,3 +16,15 @@ The following environment variables are required:
 ### Mount
 
 You should mount the docker into the container.
+
+#### Docker Container
+
+```bash
+docker run -e APP_API_URL=http://localhost:81 \
+-e AUTH_USERNAME=muhfaris \
+-e AUTH_PASSWORD=muhfaris \
+--name docker-ui  \
+-p 81:80 \
+-v /var/run/docker.sock:/var/run/docker.sock ghcr.io/muhfaris/docker-ui:<version>
+
+```
