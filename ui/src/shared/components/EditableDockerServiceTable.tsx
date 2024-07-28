@@ -299,7 +299,7 @@ const EditableDockerServiceTable: React.FC<EditableTableProps> = ({ data }) => {
 								) : (
 									<>
 										<div className="">{row.name}</div>
-										<div className="text-xs text-gray-500">{row.image}</div>
+										{/* <div className="text-xs text-gray-500">{row.image}</div> */}
 									</>
 								)}
 							</td>

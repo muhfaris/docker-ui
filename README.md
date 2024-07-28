@@ -3,7 +3,8 @@
 Currently, I use swarm for my projects. But, I struggle to manage my docker containers. I need a simple way to manage my docker containers in one place.
 The purpose of this project is to help me manage my docker service in one place, one page.
 
-![image](https://github.com/user-attachments/assets/42266179-f64e-44c8-b64c-fac43fcbb105)
+![image](https://github.com/user-attachments/assets/20eab41f-2f5e-429b-a872-5048f1d29ecf)
+![image](https://github.com/user-attachments/assets/d8b8533c-4846-41f8-bfcd-484391f3357d)
 
 ### Environments
 
