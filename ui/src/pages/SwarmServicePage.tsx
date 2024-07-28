@@ -21,6 +21,10 @@ const SwarmServicePage: React.FC = () => {
 					setData(response);
 				})
 				.catch((err: Error) => {
+					if (err.message === "invalid token") {
+						localStorage.removeItem("access_token");
+						window.location.reload();
+					}
 					setError(err.message || "Failed to fetch data");
 				})
 				.finally(() => {

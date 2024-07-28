@@ -11,4 +11,8 @@ The following environment variables are required:
 
 - AUTH_USERNAME
 - AUTH_PASSWORD
-- VITE_API_URL
+- APP_API_URL
+
+### Mount
+
+You should mount the docker into the container.

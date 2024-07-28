@@ -27,7 +27,8 @@ func New() *Router {
 	api := &Router{
 		fiber: fiber.New(
 			fiber.Config{
-				EnablePrintRoutes: true,
+				EnablePrintRoutes:        true,
+				EnableSplittingOnParsers: true,
 			},
 		),
 		handler: handler,
@@ -57,6 +58,7 @@ func (r *Router) initialize() {
 func (r *Router) servicesRouter(router fiber.Router) {
 	router.Get("", r.handler.DockerListServices())
 	router.Patch("", r.handler.DockerUpdateServices())
+	router.Patch("/status", r.handler.DockerUpdateStatusService())
 }
 
 func (r *Router) Listen(port string) {
